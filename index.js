@@ -88,6 +88,7 @@ function sendRandomRestaurant(sender, city) {
 	let yelpToken = ''
 	request({
 		url: 'https://api.yelp.com/oauth2/token',
+		method: 'POST',
 		grant_type: 'client_credentials',
 		client_id: yelpClientID,
 		client_secret: yelpClientSecret,
@@ -98,7 +99,7 @@ function sendRandomRestaurant(sender, city) {
 			console.log('Error receiving access token from Yelp: ', response.body.error)
 		} else {
 			yelpToken = response.access_token
-			sendTextMessage(sender, text)
+			sendTextMessage(sender, 'Yelp token received.')
 		}
 	})
 	request({
