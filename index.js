@@ -73,7 +73,7 @@ function sendRandomRestaurant(sender, city) {
 		qs: {access_token:yelpToken}
 		method: 'GET',
 		json: {
-			location: 'Provo, UT'
+			location: city,
 		}
 	}, function(error, response, body) {
 		if (error) {
