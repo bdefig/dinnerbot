@@ -120,10 +120,11 @@ function sendRandomRestaurant(sender, city) {
 		headers: {'Authorization': bearerText},
 		// Authorization: bearerText,
 		method: 'GET',
-		json: {
-			// access_token: yelpToken,
-			location: city,
-		}
+		qs: {location: city}
+		// json: {
+		// 	// access_token: yelpToken,
+		// 	location: city,
+		// }
 	}, function(error, response, body) {
 		if (error) {
 			console.log('Error sending to Yelp: ', error)
