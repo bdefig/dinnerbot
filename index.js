@@ -108,12 +108,11 @@ function sendRandomRestaurant(sender, city) {
 			yelpToken = JSON.parse(body).access_token
 			bearerText = 'Bearer ' + yelpToken
 			// sendTextMessage(sender, 'Yelp token received')
-			sendTextMessage(sender, JSON.stringify(response).substring(0, 300))
-			sendTextMessage(sender, yelpToken)
-			sendTextMessage(sender, bearerText)
+			// sendTextMessage(sender, JSON.stringify(response).substring(0, 300))
+			// sendTextMessage(sender, yelpToken)
+			// sendTextMessage(sender, bearerText)
 			// sendTextMessage(sender, yelpToken)
 		}
-	})
 	request({
 		url: 'https://api.yelp.com/v3/businesses/search',
 		// qs: {access_token:yelpToken},
@@ -123,7 +122,7 @@ function sendRandomRestaurant(sender, city) {
 		method: 'GET',
 		json: {
 			// access_token: yelpToken,
-			location: city,
+			'location': city,
 		}
 	}, function(error, response, body) {
 		if (error) {
@@ -135,4 +134,26 @@ function sendRandomRestaurant(sender, city) {
 			sendTextMessage(sender, text)
 		}
 	})
+	})
+	// request({
+	// 	url: 'https://api.yelp.com/v3/businesses/search',
+	// 	// qs: {access_token:yelpToken},
+	// 	// access_token: yelpToken,
+	// 	headers: {'Authorization': bearerText},
+	// 	// Authorization: bearerText,
+	// 	method: 'GET',
+	// 	json: {
+	// 		// access_token: yelpToken,
+	// 		'location': city,
+	// 	}
+	// }, function(error, response, body) {
+	// 	if (error) {
+	// 		console.log('Error sending to Yelp: ', error)
+	// 	} else if (response.body.error) {
+	// 		console.log('Error received from Yelp: ', response.body.error)
+	// 	} else {
+	// 		text = response.businesses[0].name
+	// 		sendTextMessage(sender, text)
+	// 	}
+	// })
 }
