@@ -36,7 +36,7 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        if (event.message) {
+        if (event.message.attachments) {
             let message = event.message
             let startLatitude = event.message.attachments[0].payload.coordinates.lat
             let startLongitude = event.message.attachments[0].payload.coordinates.long
@@ -44,6 +44,9 @@ app.post('/webhook/', function (req, res) {
             // sendRandomRestaurant(sender, text)
             console.log('Message: ', JSON.stringify(message))
             sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
+        }
+        else {
+        	sendTextMessage(sender, 'Please share your location')
         }
     }
     res.sendStatus(200)
