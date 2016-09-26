@@ -38,13 +38,15 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendRandomRestaurant(sender, text)
         }
     }
     res.sendStatus(200)
 })
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
+const yelpToken = process.env.YELP_ACCESS_TOKEN
 
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
@@ -63,4 +65,24 @@ function sendTextMessage(sender, text) {
             console.log('Error: ', response.body.error)
         }
     })
+}
+
+function sendRandomRestaurant(sender, city) {
+	request({
+		url: 'https://api.yelp.com/v3/businesses/search'
+		qs: {access_token:yelpToken}
+		method: 'GET',
+		json: {
+			location: 'Provo, UT'
+		}
+	}, function(error, response, body) {
+		if (error) {
+			console.log('Error sending to Yelp: ', error)
+		} else if (response.body.error) {
+			console.log('Error received from Yelp: ', response.body.error)
+		} else {
+			text = response.businesses[0].name
+			sendTextMessage(sender, text)
+		}
+	})
 }
