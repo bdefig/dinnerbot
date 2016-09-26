@@ -54,7 +54,7 @@ const yelpClientID = process.env.YELP_CLIENT_ID
 const yelpClientSecret = process.env.YELP_CLIENT_SECRET
 const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
-function getDirections(sender, startLat, startLong, endLat, endLong) {
+function getDirections(sender, startLat, startLong) {
 	let destination = getRandomRestaurant(startLat, startLong)
 	let endLat = destination.coordinates.latitude
 	let endLong = destination.coordinates.longitude
