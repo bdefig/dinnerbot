@@ -105,9 +105,10 @@ function sendRandomRestaurant(sender, city) {
 	request({
 		url: 'https://api.yelp.com/v3/businesses/search',
 		// qs: {access_token:yelpToken},
-		qs: {access_token: yelpToken},
+		// access_token: yelpToken,
 		method: 'GET',
 		json: {
+			access_token: yelp_token,
 			location: city,
 		}
 	}, function(error, response, body) {
