@@ -86,6 +86,7 @@ function sendTextMessage(sender, text) {
 
 function sendRandomRestaurant(sender, city) {
 	let yelpToken = ''
+	let bearerText = ''
 	request({
 		url: 'https://api.yelp.com/oauth2/token',
 		method: 'POST',
@@ -99,6 +100,7 @@ function sendRandomRestaurant(sender, city) {
 			console.log('Error receiving access token from Yelp: ', response.body.error)
 		} else {
 			yelpToken = response.access_token
+			bearerText = 'Bearer ' + yelpToken
 			sendTextMessage(sender, 'Yelp token received.')
 		}
 	})
@@ -106,9 +108,10 @@ function sendRandomRestaurant(sender, city) {
 		url: 'https://api.yelp.com/v3/businesses/search',
 		// qs: {access_token:yelpToken},
 		// access_token: yelpToken,
+		Authorization: bearerText,
 		method: 'GET',
 		json: {
-			access_token: yelpToken,
+			// access_token: yelpToken,
 			location: city,
 		}
 	}, function(error, response, body) {
