@@ -53,7 +53,7 @@ function sendWelcomeMessage(sender) {
         text : "Hello, first message"
     }
     request({
-		url:  "https://graph.facebook.com/v2.6/<PAGE_ID>/thread_settings",
+		url:  "https://graph.facebook.com/v2.6/me/thread_settings",
 		qs: { access_token: token }, 
 		json: { "setting_type":"call_to_actions",
 	      "thread_state":"new_thread",
