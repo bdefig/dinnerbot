@@ -122,7 +122,7 @@ function sendRandomRestaurant(sender, city) {
 		method: 'GET',
 		json: {
 			// access_token: yelpToken,
-			'location': city,
+			location: city,
 		}
 	}, function(error, response, body) {
 		if (error) {
@@ -130,7 +130,7 @@ function sendRandomRestaurant(sender, city) {
 		} else if (response.body.error) {
 			console.log('Error received from Yelp: ', response.body.error)
 		} else {
-			text = response.businesses[0].name
+			text = JSON.parse(body).businesses[0].name
 			sendTextMessage(sender, text)
 		}
 	})
