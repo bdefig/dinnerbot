@@ -36,10 +36,11 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        if (event.message && event.message.text) {
-            let text = event.message.text
+        if (event.message) {
+            let message = event.message
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-            sendRandomRestaurant(sender, text)
+            // sendRandomRestaurant(sender, text)
+            console.log('Message: ', JSON.stringify(message))
         }
     }
     res.sendStatus(200)
@@ -110,4 +111,8 @@ function sendRandomRestaurant(sender, city) {
 		}
 	})
 	})
+}
+
+function getCoordsFromUser(sender, message) {
+
 }
