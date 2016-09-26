@@ -52,29 +52,38 @@ app.post('/webhook/', function (req, res) {
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const yelpClientID = process.env.YELP_CLIENT_ID
 const yelpClientSecret = process.env.YELP_CLIENT_SECRET
+const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
-// Send text message to user
-function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+function getDirections(sender, startLat, startLong, endLat, endLong) {
+	let destination = getRandomRestaurant(startLat, startLong)
+	let endLat = destination.coordinates.latitude
+	let endLong = destination.coordinates.longitude
+	let start = startLat + ', ' + startLong
+	let dest = endLong + ', ' + endLong
+	request({
+		url: 'https://maps.googleapis.com/maps/api/directions/json',
+		method: 'GET',
+		headers: {
+			'origin': start,
+			'destination': dest,
+			'mode': 'driving',
+			'key': googleKey
+		}
+	}, function(error, response, body) {
+		if (error) {
+			console.log('Error requesting directions from Google: ', error)
+		} else if (response.body.error) {
+			console.log('Error receiving directions from Google: ', response.body.error)
+		} else {
+			let googleResponse = JSON.parse(body)
+			let legs = googleResponse.routes[0].legs
+			console.log('Legs: ', JSON.stringify(legs))
+			sendTextMessage(sender, 'Got directions. See log for details.')
+		}
+	})
 }
 
-// Send the name of a random restaurant to the user
-function sendRandomRestaurant(sender, city) {
+function getRandomRestaurant(startLat, startLong) {
 	let yelpToken = ''
 	let bearerText = ''
 	request({
@@ -110,12 +119,72 @@ function sendRandomRestaurant(sender, city) {
 			let low = 0
 			let high = businessesLength
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
-			sendTextMessage(sender, businessArray[businessNumber].name)
+			return businessArray[businessNumber]
+			// sendTextMessage(sender, businessArray[businessNumber].name)
 		}
 	})
 	})
 }
 
-function getCoordsFromUser(sender, message) {
-
+// Send text message to user
+function sendTextMessage(sender, text) {
+    let messageData = { text:text }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
 }
+
+// // Send the name of a random restaurant to the user
+// function sendRandomRestaurant(sender, city) {
+// 	let yelpToken = ''
+// 	let bearerText = ''
+// 	request({
+// 		url: 'https://api.yelp.com/oauth2/token',
+// 		method: 'POST',
+// 		form: {
+// 			grant_type: 'client_credentials',
+// 			client_id: yelpClientID,
+// 			client_secret: yelpClientSecret
+// 		}
+// 	}, function(error, response, body) {
+// 		if (error) {
+// 			console.log('Error requesting access token from Yelp: ', error)
+// 		} else if (response.body.error) {
+// 			console.log('Error receiving access token from Yelp: ', response.body.error)
+// 		} else {
+// 			yelpToken = JSON.parse(body).access_token
+// 			bearerText = 'Bearer ' + yelpToken
+// 		}
+// 	request({
+// 		url: 'https://api.yelp.com/v3/businesses/search',
+// 		headers: {'Authorization': bearerText},
+// 		method: 'GET',
+// 		qs: {location: city}
+// 	}, function(error, response, body) {
+// 		if (error) {
+// 			console.log('Error sending to Yelp: ', error)
+// 		} else if (response.body.error) {
+// 			console.log('Error received from Yelp: ', response.body.error)
+// 		} else {
+// 			let businessArray = JSON.parse(body).businesses
+// 			let businessesLength = businessArray.length
+// 			let low = 0
+// 			let high = businessesLength
+// 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
+// 			sendTextMessage(sender, businessArray[businessNumber].name)
+// 		}
+// 	})
+// 	})
+// }
