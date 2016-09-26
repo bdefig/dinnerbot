@@ -101,8 +101,8 @@ function sendRandomRestaurant(sender, city) {
 		} else {
 			let businessArray = JSON.parse(body).businesses
 			let businessesLength = businessArray.length
-			low = 0
-			high = businessesLength
+			let low = 0
+			let high = businessesLength
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
 			sendTextMessage(sender, businessArray[businessNumber])
 		}
