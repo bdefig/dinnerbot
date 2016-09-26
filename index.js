@@ -60,7 +60,7 @@ const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
 function getDirections(sender, startLat, startLong) {
 	let destination = getRandomRestaurant(startLat, startLong)
-	console.log('Destination: ', destination)
+	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
 	let endLat = destination.coordinates.latitude
 	let endLong = destination.coordinates.longitude
 	let start = startLat + ', ' + startLong
