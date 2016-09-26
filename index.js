@@ -38,11 +38,11 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.attachments) {
             let message = event.message
+            console.log('Message: ', JSON.stringify(message))            
             let startLatitude = event.message.attachments[0].payload.coordinates.lat
             let startLongitude = event.message.attachments[0].payload.coordinates.long
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             // sendRandomRestaurant(sender, text)
-            console.log('Message: ', JSON.stringify(message))
             sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
             getDirections(sender, startLatitude, startLongitude)
         }
