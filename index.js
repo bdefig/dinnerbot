@@ -101,9 +101,9 @@ function sendRandomRestaurant(sender, city) {
 		} else {
 			// yelpToken = response.access_token
 			yelpToken = response
-			bearerText = 'Bearer ' + yelpToken
+			// bearerText = 'Bearer ' + yelpToken
 			// sendTextMessage(sender, 'Yelp token received')
-			sendTextMessage(sender, bearerText)
+			sendTextMessage(sender, yelpToken)
 		}
 	})
 	request({
