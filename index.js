@@ -90,9 +90,11 @@ function sendRandomRestaurant(sender, city) {
 	request({
 		url: 'https://api.yelp.com/oauth2/token',
 		method: 'POST',
-		grant_type: 'client_credentials',
-		client_id: yelpClientID,
-		client_secret: yelpClientSecret,
+		form: {
+			grant_type: 'client_credentials',
+			client_id: yelpClientID,
+			client_secret: yelpClientSecret
+		}
 	}, function(error, response, body) {
 		if (error) {
 			console.log('Error requesting access token from Yelp: ', error)
