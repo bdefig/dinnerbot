@@ -46,23 +46,24 @@ app.post('/webhook/', function (req, res) {
 })
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
-const yelpToken = process.env.YELP_ACCESS_TOKEN
+const yelpClientID = process.env.YELP_CLIENT_ID
+const yelpClientSecret = process.env.YELP_CLIENT_SECRET
 
-function sendWelcomeMessage(sender) {
-    messageData = {
-        text : "Hello, first message"
-    }
-    request({
-		url:  "https://graph.facebook.com/v2.6/me/thread_settings",
-		qs: { access_token: token }, 
-		json: { "setting_type":"call_to_actions",
-	      "thread_state":"new_thread",
-	      "call_to_actions":[{"message":{"text":"Hello there!"}}]
-	    }, function(){
-	//call back
-		}
-	})
-}
+// function sendWelcomeMessage(sender) {
+//     messageData = {
+//         text : "Hello, first message"
+//     }
+//     request({
+// 		url:  "https://graph.facebook.com/v2.6/me/thread_settings",
+// 		qs: { access_token: token }, 
+// 		json: { "setting_type":"call_to_actions",
+// 	      "thread_state":"new_thread",
+// 	      "call_to_actions":[{"message":{"text":"Hello there!"}}]
+// 	    }, function(){
+// 	//call back
+// 		}
+// 	})
+// }
 
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
@@ -84,6 +85,22 @@ function sendTextMessage(sender, text) {
 }
 
 function sendRandomRestaurant(sender, city) {
+	let yelpToken = ''
+	request({
+		url: 'https://api.yelp.com/oauth2/token',
+		grant_type: 'client_credentials',
+		client_id: yelpClientID,
+		client_secret: yelpClientSecret,
+	}, function(error, response, body) {
+		if (error) {
+			console.log('Error requesting access token from Yelp: ', error)
+		} else if (response.body.error) {
+			console.log('Error receiving access token from Yelp: ', response.body.error)
+		} else {
+			yelpToken = response.access_token
+			sendTextMessage(sender, text)
+		}
+	})
 	request({
 		url: 'https://api.yelp.com/v3/businesses/search',
 		// qs: {access_token:yelpToken},
