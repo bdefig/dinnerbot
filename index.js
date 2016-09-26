@@ -48,6 +48,22 @@ app.post('/webhook/', function (req, res) {
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const yelpToken = process.env.YELP_ACCESS_TOKEN
 
+function sendWelcomeMessage(sender) {
+    messageData = {
+        text : "Hello, first message"
+    }
+    request({
+		url:  "https://graph.facebook.com/v2.6/<PAGE_ID>/thread_settings",
+		qs: { access_token: token }, 
+		json: { "setting_type":"call_to_actions",
+	      "thread_state":"new_thread",
+	      "call_to_actions":[{"message":{"text":"Hello there!"}}]
+	    }, function(){
+	//call back
+		}
+	})
+}
+
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
     request({
