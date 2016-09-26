@@ -108,7 +108,8 @@ function sendRandomRestaurant(sender, city) {
 		url: 'https://api.yelp.com/v3/businesses/search',
 		// qs: {access_token:yelpToken},
 		// access_token: yelpToken,
-		Authorization: bearerText,
+		headers: {Authorization: bearerText},
+		// Authorization: bearerText,
 		method: 'GET',
 		json: {
 			// access_token: yelpToken,
