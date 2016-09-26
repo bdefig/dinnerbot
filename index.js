@@ -108,7 +108,7 @@ function sendRandomRestaurant(sender, city) {
 		// access_token: yelpToken,
 		method: 'GET',
 		json: {
-			access_token: yelp_token,
+			access_token: yelpToken,
 			location: city,
 		}
 	}, function(error, response, body) {
