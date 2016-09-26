@@ -36,7 +36,7 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        if (event.message && event.message.attachments && event.message.attachments[0].payload.coordinates) {
+        if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
             let message = event.message
             console.log('Message: ', JSON.stringify(message))            
             let startLatitude = event.message.attachments[0].payload.coordinates.lat
