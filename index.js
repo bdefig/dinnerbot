@@ -104,7 +104,7 @@ function sendRandomRestaurant(sender, city) {
 			let low = 0
 			let high = businessesLength
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
-			sendTextMessage(sender, businessArray[businessNumber])
+			sendTextMessage(sender, businessArray[businessNumber].name)
 		}
 	})
 	})
