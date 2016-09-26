@@ -101,14 +101,14 @@ function sendRandomRestaurant(sender, city) {
 		} else {
 			yelpToken = response.access_token
 			bearerText = 'Bearer ' + yelpToken
-			sendTextMessage(sender, 'Yelp token received.')
+			sendTextMessage(sender, 'Yelp token received: ' + yelpToken)
 		}
 	})
 	request({
 		url: 'https://api.yelp.com/v3/businesses/search',
 		// qs: {access_token:yelpToken},
 		// access_token: yelpToken,
-		headers: {Authorization: bearerText},
+		headers: {'Authorization': bearerText},
 		// Authorization: bearerText,
 		method: 'GET',
 		json: {
