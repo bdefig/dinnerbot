@@ -105,7 +105,10 @@ function sendRandomRestaurant(sender, city) {
 			// let thisBody = response.body
 			// yelpToken = thisBody.access_token
 			// yelpToken = JSON.stringify(response).substring(0, 300)
-			yelpToken = body.access_token
+			// yelpToken = body.access_token
+			response.on('data', funtion(chunk) {
+				yelpToken = chunk.access_token
+			})
 			bearerText = 'Bearer ' + yelpToken
 			// sendTextMessage(sender, 'Yelp token received')
 			sendTextMessage(sender, JSON.stringify(response).substring(0, 300))
