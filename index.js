@@ -111,7 +111,7 @@ function getRandomRestaurant(startLat, startLong) {
 		url: 'https://api.yelp.com/v3/businesses/search',
 		headers: {'Authorization': bearerText},
 		method: 'GET',
-		qs: {location: city}
+		qs: {latitude: startLat, longitude: startLong}
 	}, function(error, response, body) {
 		if (error) {
 			console.log('Error sending to Yelp: ', error)
