@@ -131,8 +131,8 @@ function sendRandomRestaurant(sender, city) {
 		} else if (response.body.error) {
 			console.log('Error received from Yelp: ', response.body.error)
 		} else {
-			text = JSON.parse(body).businesses[0].name
-			sendTextMessage(sender, text)
+			let businessName = JSON.parse(body).businesses[0].name
+			sendTextMessage(sender, businessName)
 		}
 	})
 	})
