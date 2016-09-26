@@ -102,9 +102,10 @@ function sendRandomRestaurant(sender, city) {
 			console.log('Error receiving access token from Yelp: ', response.body.error)
 		} else {
 			// yelpToken = JSON.stringify(response.body).substring(0, 300)
-			let thisBody = response.body
-			yelpToken = thisBody.access_token
+			// let thisBody = response.body
+			// yelpToken = thisBody.access_token
 			// yelpToken = JSON.stringify(response).substring(0, 300)
+			yelpToken = response.body[1]
 			bearerText = 'Bearer ' + yelpToken
 			// sendTextMessage(sender, 'Yelp token received')
 			sendTextMessage(sender, JSON.stringify(response).substring(0, 300))
