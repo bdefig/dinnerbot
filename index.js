@@ -33,23 +33,25 @@ app.listen(app.get('port'), function() {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
-    for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
-        if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
-            let message = event.message
-            console.log('Message: ', JSON.stringify(message))            
-            let startLatitude = event.message.attachments[0].payload.coordinates.lat
-            let startLongitude = event.message.attachments[0].payload.coordinates.long
-            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-            // sendRandomRestaurant(sender, text)
-            sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
-            getDirections(sender, startLatitude, startLongitude)
-        }
-        else {
-        	sendTextMessage(sender, 'Please share your location')
-        }
-    }
+    if (messaging_events.length < 5) {
+	    for (let i = 0; i < messaging_events.length; i++) {
+	        let event = req.body.entry[0].messaging[i]
+	        let sender = event.sender.id
+	        if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
+	            let message = event.message
+	            console.log('Message: ', JSON.stringify(message))            
+	            let startLatitude = event.message.attachments[0].payload.coordinates.lat
+	            let startLongitude = event.message.attachments[0].payload.coordinates.long
+	            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+	            // sendRandomRestaurant(sender, text)
+	            sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
+	            getDirections(sender, startLatitude, startLongitude)
+	        }
+	        else {
+	        	sendTextMessage(sender, 'Please share your location')
+	        }
+	    }
+	}
     res.sendStatus(200)
 })
 
