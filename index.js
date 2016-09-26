@@ -49,6 +49,7 @@ const token = process.env.FB_PAGE_ACCESS_TOKEN
 const yelpClientID = process.env.YELP_CLIENT_ID
 const yelpClientSecret = process.env.YELP_CLIENT_SECRET
 
+// Send text message to user
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
     request({
@@ -68,6 +69,7 @@ function sendTextMessage(sender, text) {
     })
 }
 
+// Send the name of a random restaurant to the user
 function sendRandomRestaurant(sender, city) {
 	let yelpToken = ''
 	let bearerText = ''
