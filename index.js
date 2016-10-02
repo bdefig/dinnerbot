@@ -85,7 +85,7 @@ app.post('/webhook/', function (req, res) {
         else {
         	// sendTextMessage(sender, 'Please share your location')
         	console.log('Error: ', 'Message from user is not a location')
-        	console.log(event)
+        	console.log(event.message.attachments[0])
         }
     }
     res.sendStatus(200)
