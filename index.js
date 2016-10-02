@@ -64,14 +64,26 @@ function findById(o, id) {
     return result;
 }
 
+function findById2(o, id) {
+	if (o.id === id) {
+		return o;
+	}
+	var result, p;
+	for (p in o) {
+		result = findById2(o[p], id);
+		}
+	}
+	return result;
+}
+
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         // if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
-        let startLatitude = findById(event, 'lat')
-        let startLongitude = findById(event, 'long')
+        let startLatitude = findById2(event, 'lat')
+        let startLongitude = findById2(event, 'long')
         if (startLatitude && startLongitude) {
             // let message = event.message
             console.log('Message: ', JSON.stringify(event.message))            
