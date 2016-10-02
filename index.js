@@ -33,14 +33,14 @@ app.listen(app.get('port'), function() {
 
 // Check if an object has a property. See http://stackoverflow.com/questions/4676223/check-if-object-member-exists-in-nested-object
 function objHas(obj, prop) {
-    var parts = prop.split('.');
+    var parts = prop.split('.')
     for(var i = 0, l = parts.length; i < l; i++) {
-        var part = parts[i];
+        var part = parts[i]
         if(obj !== null && typeof obj === "object" && part in obj) {
-            obj = obj[part];
+            obj = obj[part]
         }
         else {
-            return false;
+            return false
         }
     }
     return true;
