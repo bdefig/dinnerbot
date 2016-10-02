@@ -61,7 +61,7 @@ function findInJSON(o, id) {
       		}
     	}
     	else {
-    		console.log(i);
+    		//console.log(i);
       		if (i === id) {
       			result = o[i];
       		}
@@ -94,6 +94,7 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
+        console.log(JSON.stringify(event.message.attachments[0]))
         // if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
         let startLatitude = findInJSON(event, 'lat')
         let startLongitude = findInJSON(event, 'long')
