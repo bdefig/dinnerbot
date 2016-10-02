@@ -119,7 +119,7 @@ const yelpClientSecret = process.env.YELP_CLIENT_SECRET
 const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
 function getDirections(sender, startLat, startLong) {
-	var [destLat, destLong] = getRandomRestaurant(startLat, startLong)
+	var[] [destLat, destLong] = getRandomRestaurant(startLat, startLong)
 	console.log('Destination: ', destLat, destLong))
 	// if (destination) {
 	// 	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
