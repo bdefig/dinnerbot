@@ -90,6 +90,7 @@ function numberOfThings(o) {
 }
 
 app.post('/webhook/', function (req, res) {
+	console.log('Received: ', JSON.stringify(req))
 	if (req.body.hasOwnProperty('object') && req.body['object'] === "page") {
 	    let messaging_events = req.body.entry[0].messaging
 	    for (let i = 0; i < messaging_events.length; i++) {
