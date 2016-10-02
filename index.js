@@ -31,14 +31,30 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
+// Check if an object has a property. See http://stackoverflow.com/questions/4676223/check-if-object-member-exists-in-nested-object
+function objHas(obj, prop) {
+    var parts = prop.split('.');
+    for(var i = 0, l = parts.length; i < l; i++) {
+        var part = parts[i];
+        if(obj !== null && typeof obj === "object" && part in obj) {
+            obj = obj[part];
+        }
+        else {
+            return false;
+        }
+    }
+    return true;
+}
+
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
-            let message = event.message
-            console.log('Message: ', JSON.stringify(message))            
+        // if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
+        if (objHas(event, coordinates)) {
+            // let message = event.message
+            console.log('Message: ', JSON.stringify(event.message))            
             let startLatitude = event.message.attachments[0].payload.coordinates.lat
             let startLongitude = event.message.attachments[0].payload.coordinates.long
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
