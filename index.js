@@ -90,30 +90,27 @@ function numberOfThings(o) {
 }
 
 app.post('/webhook/', function (req, res) {
-	//console.log('Received: ', JSON.stringify(req))
-	if (req.body.hasOwnProperty('object') && req.body['object'] === "page") {
-	    let messaging_events = req.body.entry[0].messaging
-	    for (let i = 0; i < messaging_events.length; i++) {
-	        let event = req.body.entry[0].messaging[i]
-	        let sender = event.sender.id
-	        console.log(event.recipient.id)
-	        //console.log(JSON.stringify(event.message.attachments[0]))
-	        let startLatitude = findInJSON(event, 'lat')
-	        let startLongitude = findInJSON(event, 'long')
-	        if (startLatitude && startLongitude) {
-	            // let message = event.message
-	            console.log('Message: ', JSON.stringify(event.message))            
-	            // sendRandomRestaurant(sender, text)
-	            sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
-	            getDirections(sender, startLatitude, startLongitude)
-	        }
-	        else {
-	        	// sendTextMessage(sender, 'Please share your location')
-	        	console.log('Error: ', 'Message from user is not a location')
-	        }
-	    }
-	    res.sendStatus(200)
-	}
+    let messaging_events = req.body.entry[0].messaging
+    for (let i = 0; i < messaging_events.length; i++) {
+        let event = req.body.entry[0].messaging[i]
+        let sender = event.sender.id
+        //console.log(event.recipient.id)
+        //console.log(JSON.stringify(event.message.attachments[0]))
+        let startLatitude = findInJSON(event, 'lat')
+        let startLongitude = findInJSON(event, 'long')
+        if (startLatitude && startLongitude) {
+            // let message = event.message
+            console.log('Message: ', JSON.stringify(event.message))            
+            // sendRandomRestaurant(sender, text)
+            sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
+            getDirections(sender, startLatitude, startLongitude)
+        }
+        else {
+        	// sendTextMessage(sender, 'Please share your location')
+        	//console.log('Error: ', 'Message from user is not a location')
+        }
+    }
+    res.sendStatus(200)
 })
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
