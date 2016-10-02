@@ -46,17 +46,37 @@ function objHas(obj, prop) {
     return true;
 }
 
+// From http://codereview.stackexchange.com/questions/73714/find-a-nested-property-in-an-object
+function findById(o, id) {
+    //Early return
+    if( o.id === id ){
+      return o;
+    }
+    var result, p; 
+    for (p in o) {
+        if( o.hasOwnProperty(p) && typeof o[p] === 'object' ) {
+            result = findById(o[p], id);
+            if(result){
+                return result;
+            }
+        }
+    }
+    return 'undefined';
+}
+
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         // if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
-        if (objHas(event, 'message.attachments[0].payload.coordinates')) {
+        let startLatitude = findById(event, 'lat')
+        let startLongitude = findById(event, 'long')
+        if (startLatitude && startLongitude) {
             // let message = event.message
             console.log('Message: ', JSON.stringify(event.message))            
-            let startLatitude = event.message.attachments[0].payload.coordinates.lat
-            let startLongitude = event.message.attachments[0].payload.coordinates.long
+            // let startLatitude = event.message.attachments[0].payload.coordinates.lat
+            // let startLongitude = event.message.attachments[0].payload.coordinates.long
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             // sendRandomRestaurant(sender, text)
             sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
