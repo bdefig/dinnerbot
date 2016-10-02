@@ -52,7 +52,7 @@ app.post('/webhook/', function (req, res) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         // if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
-        if (objHas(event, 'message.attachments.payload.coordinates')) {
+        if (objHas(event, 'message.attachments[0].payload.coordinates')) {
             // let message = event.message
             console.log('Message: ', JSON.stringify(event.message))            
             let startLatitude = event.message.attachments[0].payload.coordinates.lat
