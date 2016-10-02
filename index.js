@@ -61,7 +61,7 @@ function findById(o, id) {
             }
         }
     }
-    return 'undefined';
+    return result;
 }
 
 app.post('/webhook/', function (req, res) {
