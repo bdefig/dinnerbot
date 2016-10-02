@@ -122,37 +122,38 @@ const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
 function getDirections(sender, startLat, startLong) {
 	let destination = getRandomRestaurant(startLat, startLong)
-	if (destination) {
-		console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
-		let endLat = destination.coordinates.latitude
-		let endLong = destination.coordinates.longitude
-		let start = startLat + ', ' + startLong
-		let dest = endLong + ', ' + endLong
-		request({
-			url: 'https://maps.googleapis.com/maps/api/directions/json',
-			method: 'GET',
-			headers: {
-				'origin': start,
-				'destination': dest,
-				'mode': 'driving',
-				'key': googleKey
-			}
-		}, function(error, response, body) {
-			if (error) {
-				console.log('Error requesting directions from Google: ', error)
-			} else if (response.body.error) {
-				console.log('Error receiving directions from Google: ', response.body.error)
-			} else {
-				let googleResponse = JSON.parse(body)
-				let legs = googleResponse.routes[0].legs
-				console.log('Legs: ', JSON.stringify(legs))
-				sendTextMessage(sender, 'Got directions. See log for details.')
-			}
-		})
-	}
-	else {
-		console.log('Error: ', 'Error receiving random restaurant from Yelp.')
-	}
+	console.log('Destination: ', JSON.stringify(destination))
+	// if (destination) {
+	// 	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
+	// 	let endLat = destination.coordinates.latitude
+	// 	let endLong = destination.coordinates.longitude
+	// 	let start = startLat + ', ' + startLong
+	// 	let dest = endLong + ', ' + endLong
+	// 	request({
+	// 		url: 'https://maps.googleapis.com/maps/api/directions/json',
+	// 		method: 'GET',
+	// 		headers: {
+	// 			'origin': start,
+	// 			'destination': dest,
+	// 			'mode': 'driving',
+	// 			'key': googleKey
+	// 		}
+	// 	}, function(error, response, body) {
+	// 		if (error) {
+	// 			console.log('Error requesting directions from Google: ', error)
+	// 		} else if (response.body.error) {
+	// 			console.log('Error receiving directions from Google: ', response.body.error)
+	// 		} else {
+	// 			let googleResponse = JSON.parse(body)
+	// 			let legs = googleResponse.routes[0].legs
+	// 			console.log('Legs: ', JSON.stringify(legs))
+	// 			sendTextMessage(sender, 'Got directions. See log for details.')
+	// 		}
+	// 	})
+	// }
+	// else {
+	// 	console.log('Error: ', 'Error receiving random restaurant from Yelp.')
+	// }
 }
 
 function getRandomRestaurant(startLat, startLong) {
