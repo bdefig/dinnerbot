@@ -71,7 +71,6 @@ function findById2(o, id) {
 	var result, p;
 	for (p in o) {
 		result = findById2(o[p], id);
-		}
 	}
 	return result;
 }
