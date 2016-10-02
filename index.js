@@ -48,26 +48,26 @@ function objHas(obj, prop) {
 
 function findInJSON(o, id) {
 	var result;
-  for (i in o) {
-  	if (o[i] instanceof Object) {
-    	result = findInJSON(o[i], id);
+	for (var i in o) {
+  		if (o[i] instanceof Object) {
+    		result = findInJSON(o[i], id);
+    	}
+    	if (result) {
+    		return result;
+    	}
+    	else if (o[i] instanceof Array) {
+    		for (var j in o[i]) {
+      			result = findInJSON(j, id);
+      		}
+    	}
+    	else {
+    		console.log(i);
+      		if (i === id) {
+      			result = o[i];
+      		}
+    	}
     }
-    if (result) {
-    	return result;
-    }
-    else if (o[i] instanceof Array) {
-    	for (j in o[i]) {
-      result = findInJSON(j, id);
-      }
-    }
-    else {
-    	console.log(i);
-      if (i === id) {
-      	result = o[i];
-      }
-    }
-  }
-  return result;
+    return result;
 }
 
 function numberOfThings(o) {
