@@ -46,33 +46,47 @@ function objHas(obj, prop) {
     return true;
 }
 
-// From http://codereview.stackexchange.com/questions/73714/find-a-nested-property-in-an-object
-function findById(o, id) {
-    //Early return
-    if( o.id === id ){
-      return o;
+function findInJSON(o, id) {
+	var result;
+  for (i in o) {
+  	if (o[i] instanceof Object) {
+    	result = findInJSON(o[i], id);
     }
-    var result, p; 
-    for (p in o) {
-        if( o.hasOwnProperty(p) && typeof o[p] === 'object' ) {
-            result = findById(o[p], id);
-            if(result){
-                return result;
-            }
-        }
+    if (result) {
+    	return result;
     }
-    return result;
+    else if (o[i] instanceof Array) {
+    	for (j in o[i]) {
+      result = findInJSON(j, id);
+      }
+    }
+    else {
+    	console.log(i);
+      if (i === id) {
+      	result = o[i];
+      }
+    }
+  }
+  return result;
 }
 
-function findById2(o, id) {
-	if (o.id === id) {
-		return o;
-	}
-	var result, p;
-	for (p in o) {
-		result = findById2(o[p], id);
-	}
-	return result;
+function numberOfThings(o) {
+	var num = 0;
+  for (i in o) {
+    if (o[i] instanceof Object) {
+      num += numberOfThings(o[i])
+    }
+    else if (o[i] instanceof Array) {
+      for (j in o[i]) {
+        num += numberOfThings(j)
+      }
+    }
+    else {
+      num += 1;
+      console.log(o[i])
+    }
+  }
+  return num;
 }
 
 app.post('/webhook/', function (req, res) {
@@ -81,8 +95,8 @@ app.post('/webhook/', function (req, res) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         // if (event.message && event.message.attachments && event.message.attachments[0].payload && event.message.attachments[0].payload.coordinates) {
-        let startLatitude = findById2(event, 'lat')
-        let startLongitude = findById2(event, 'long')
+        let startLatitude = findInJSON(event, 'lat')
+        let startLongitude = findInJSON(event, 'long')
         if (startLatitude && startLongitude) {
             // let message = event.message
             console.log('Message: ', JSON.stringify(event.message))            
