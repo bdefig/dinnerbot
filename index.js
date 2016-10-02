@@ -119,8 +119,8 @@ const yelpClientSecret = process.env.YELP_CLIENT_SECRET
 const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
 function getDirections(sender, startLat, startLong) {
-	let destination = getRandomRestaurant(startLat, startLong)
-	console.log('Destination: ', JSON.stringify(destination))
+	let [destLat, destLong] = getRandomRestaurant(startLat, startLong)
+	console.log('Destination: ', destLat, destLong))
 	// if (destination) {
 	// 	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
 	// 	let endLat = destination.coordinates.latitude
@@ -191,7 +191,7 @@ function getRandomRestaurant(startLat, startLong) {
 			let high = businessesLength
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
 			console.log(businessArray[businessNumber].name)
-			return businessArray[businessNumber]
+			return [businessArray[businessNumber].coordinates.latitude, businessArray[businessNumber].coordinates.longitude]
 			// sendTextMessage(sender, businessArray[businessNumber].name)
 		}
 	})
