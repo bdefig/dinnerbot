@@ -4,6 +4,19 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const googlemaps = require('googlemaps')
+
+const token = process.env.FB_PAGE_ACCESS_TOKEN
+const yelpClientID = process.env.YELP_CLIENT_ID
+const yelpClientSecret = process.env.YELP_CLIENT_SECRET
+const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
+
+var publicGMConfig = {
+	key: googleKey,
+	secure: true
+}
+
+var gmAPI = new GoogleMapsAPI(publicGMConfig)
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -113,11 +126,6 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-const token = process.env.FB_PAGE_ACCESS_TOKEN
-const yelpClientID = process.env.YELP_CLIENT_ID
-const yelpClientSecret = process.env.YELP_CLIENT_SECRET
-const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
-
 function getDirections(sender, startLat, startLong) {
 	var yelpToken = ''
 	var bearerText = ''
@@ -172,29 +180,46 @@ function getDirections(sender, startLat, startLong) {
 			console.log('Start: ', start)
 			console.log('Dest: ', dest)
 
-			request({
-				url: 'https://maps.googleapis.com/maps/api/directions/json',
-				method: 'GET',
-				headers: {
-					'origin': start,
-					'destination': dest,
-					'mode': 'driving',
-					'key': googleKey
-				}
-			}, function(error, response, body) {
-				if (error) {
-					console.log('Error requesting directions from Google: ', error)
+			var directionsParams = {
+				origin: start,
+				destination: dest,
+				mode: 'driving'
+			}
+
+			gmAPI.directions(params, function(err, response) {
+				if (err) {
+					console.log('Error requesting directions from Google: ', err)
 				} else if (response.body.error) {
 					console.log('Error receiving directions from Google: ', response.body.error)
 				} else {
-					console.log(JSON.stringify(body))
-
-					// let googleResponse = JSON.parse(body)
-					// let legs = googleResponse.routes[0].legs
-					// console.log('Legs: ', JSON.stringify(legs))
-					// sendTextMessage(sender, 'Got directions. See log for details.')
+					console.log('Successfully received directions from Google')
+					console.log(JSON.stringify(response.body))
 				}
 			})
+
+			// request({
+			// 	url: 'https://maps.googleapis.com/maps/api/directions/json',
+			// 	method: 'GET',
+			// 	headers: {
+			// 		origin: start,
+			// 		'destination': dest,
+			// 		'mode': 'driving',
+			// 		'key': googleKey
+			// 	}
+			// }, function(error, response, body) {
+			// 	if (error) {
+			// 		console.log('Error requesting directions from Google: ', error)
+			// 	} else if (response.body.error) {
+			// 		console.log('Error receiving directions from Google: ', response.body.error)
+			// 	} else {
+			// 		console.log(JSON.stringify(body))
+
+			// 		// let googleResponse = JSON.parse(body)
+			// 		// let legs = googleResponse.routes[0].legs
+			// 		// console.log('Legs: ', JSON.stringify(legs))
+			// 		// sendTextMessage(sender, 'Got directions. See log for details.')
+			// 	}
+			// })
 		}
 	})
 	})
