@@ -203,7 +203,7 @@ function getDirections(sender, startLat, startLong) {
 			let destLat = businessArray[businessNumber].coordinates.latitude
 			let destLong = businessArray[businessNumber].coordinates.longitude
 
-			sendTextMessage(sender, 'Destination: ' + businessName + ' ' + budestLat + ', ' + destLong)
+			sendTextMessage(sender, 'Destination: ' + businessName + ' ' + destLat + ', ' + destLong)
 
 			//console.log(destLat)
 			//console.log(destLong)
