@@ -202,18 +202,18 @@ function getDirections(sender, startLat, startLong) {
 
 // Send text message to user
 function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-    var textToSend = htmlToText.fromString(messageData, {
+    var textToSend = htmlToText.fromString(text, {
     	wordwrap: false
 	})
 	console.log(textToSend)
+	let messageData = { text:textToSend }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: textToSend,
+            message: messageData,
         }
     }, function(error, response, body) {
         if (error) {
