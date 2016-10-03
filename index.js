@@ -195,6 +195,9 @@ function getRandomRestaurant(startLat, startLong) {
 			let destLat = businessArray[businessNumber].coordinates.latitude
 			let destLong = businessArray[businessNumber].coordinates.longitude
 
+			console.log(destLat)
+			console.log(destLong)
+
 			return {
 				'lat': destLat,
 				'long': destLong
