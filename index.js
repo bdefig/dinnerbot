@@ -191,7 +191,7 @@ function getDirections(sender, startLat, startLong) {
 					// 	console.log(JSON.stringify(thisLeg))
 					// }
 					for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-						console.log(JSON.stringify(response.routes[0].legs[0].steps[i]))
+						console.log(JSON.stringify(response.routes[0].legs[0].steps[i].html_instructions))
 					}
 				}
 			})
