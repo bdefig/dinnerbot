@@ -119,48 +119,6 @@ const yelpClientSecret = process.env.YELP_CLIENT_SECRET
 const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
 function getDirections(sender, startLat, startLong) {
-	// var destCoords 
-	// destCoords = getRandomRestaurant(startLat, startLong)
-	//let debugCoords = JSON.stringify(destCoords)
-	// for (i in destCoords) {
-	// 	console.log('Coordinate: ', i)
-	// }
-
-	//console.log('Destination name outside: ', getRandomRestaurant(startLat, startLong))
-
-	// console.log('Destination: ', JSON.stringify(destCoords))
-	// if (destination) {
-	// 	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
-	// 	let endLat = destination.coordinates.latitude
-	// 	let endLong = destination.coordinates.longitude
-	// 	let start = startLat + ', ' + startLong
-	// 	let dest = endLong + ', ' + endLong
-	// 	request({
-	// 		url: 'https://maps.googleapis.com/maps/api/directions/json',
-	// 		method: 'GET',
-	// 		headers: {
-	// 			'origin': start,
-	// 			'destination': dest,
-	// 			'mode': 'driving',
-	// 			'key': googleKey
-	// 		}
-	// 	}, function(error, response, body) {
-	// 		if (error) {
-	// 			console.log('Error requesting directions from Google: ', error)
-	// 		} else if (response.body.error) {
-	// 			console.log('Error receiving directions from Google: ', response.body.error)
-	// 		} else {
-	// 			let googleResponse = JSON.parse(body)
-	// 			let legs = googleResponse.routes[0].legs
-	// 			console.log('Legs: ', JSON.stringify(legs))
-	// 			sendTextMessage(sender, 'Got directions. See log for details.')
-	// 		}
-	// 	})
-	// }
-	// else {
-	// 	console.log('Error: ', 'Error receiving random restaurant from Yelp.')
-	// }
-
 	var yelpToken = ''
 	var bearerText = ''
 	var businessName = ''
@@ -205,29 +163,36 @@ function getDirections(sender, startLat, startLong) {
 
 			sendTextMessage(sender, 'Destination: ' + businessName + ' ' + destLat + ', ' + destLong)
 
-			//console.log(destLat)
-			//console.log(destLong)
-
-			// var destObj = new Object()
-			// destObj['lat'] = '1'
-			// destObj['long'] = '2'
-
-			// businessName = businessArray[businessNumber].name
-			// console.log('Destination name inside: ', businessName)
-
-			// return businessName
-
-			// return {
-			// 	// 'lat': destLat,
-			// 	// 'long': destLong
-			// 	lat: '1',
-			// 	long: '2'
-			// }
-			// sendTextMessage(sender, businessArray[businessNumber].name)
+			console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
+			let endLat = destination.coordinates.latitude
+			let endLong = destination.coordinates.longitude
+			let start = startLat + ', ' + startLong
+			let dest = endLong + ', ' + endLong
+			
+			request({
+				url: 'https://maps.googleapis.com/maps/api/directions/json',
+				method: 'GET',
+				headers: {
+					'origin': start,
+					'destination': dest,
+					'mode': 'driving',
+					'key': googleKey
+				}
+			}, function(error, response, body) {
+				if (error) {
+					console.log('Error requesting directions from Google: ', error)
+				} else if (response.body.error) {
+					console.log('Error receiving directions from Google: ', response.body.error)
+				} else {
+					let googleResponse = JSON.parse(body)
+					let legs = googleResponse.routes[0].legs
+					console.log('Legs: ', JSON.stringify(legs))
+					sendTextMessage(sender, 'Got directions. See log for details.')
+				}
+			})
 		}
 	})
 	})
-	// return businessArray[businessNumber].name
 }
 
 // Send text message to user
