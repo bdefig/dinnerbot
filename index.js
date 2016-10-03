@@ -122,7 +122,7 @@ function getDirections(sender, startLat, startLong) {
 	let destCoords = getRandomRestaurant(startLat, startLong)
 	//let debugCoords = JSON.stringify(destCoords)
 	for (i in destCoords) {
-		console.log(o[i])
+		console.log('Coordinate: ', destCoords[i])
 	}
 	console.log('Destination: ', destCoords)
 	// if (destination) {
