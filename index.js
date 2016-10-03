@@ -192,9 +192,12 @@ function getRandomRestaurant(startLat, startLong) {
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
 			console.log(businessArray[businessNumber].name)
 
+			let destLat = businessArray[businessNumber].coordinates.latitude
+			let destLong = businessArray[businessNumber].coordinates.longitude
+
 			return {
-				'lat': businessArray[businessNumber].coordinates.latitude,
-				'long': businessArray[businessNumber].coordinates.longitude
+				'lat': destLat,
+				'long': destLong
 			}
 			// sendTextMessage(sender, businessArray[businessNumber].name)
 		}
