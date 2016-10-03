@@ -226,7 +226,7 @@ function getRandomRestaurant(startLat, startLong) {
 		}
 	})
 	})
-	return businessName
+	return businessArray[businessNumber].name
 }
 
 // Send text message to user
