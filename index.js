@@ -186,7 +186,7 @@ function getDirections(sender, startLat, startLong) {
 				mode: 'driving'
 			}
 
-			gmAPI.directions(params, function(err, response) {
+			gmAPI.directions(directionsParams, function(err, response) {
 				if (err) {
 					console.log('Error requesting directions from Google: ', err)
 				} else if (response.body.error) {
