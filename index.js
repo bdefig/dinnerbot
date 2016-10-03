@@ -207,8 +207,8 @@ function getRandomRestaurant(startLat, startLong) {
 			return {
 				// 'lat': destLat,
 				// 'long': destLong
-				lat: 1,
-				long: 2
+				lat: '1',
+				long: '2'
 			}
 			// sendTextMessage(sender, businessArray[businessNumber].name)
 		}
