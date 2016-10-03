@@ -126,7 +126,7 @@ function getDirections(sender, startLat, startLong) {
 	// 	console.log('Coordinate: ', i)
 	// }
 
-	console.log('Destination name outside: ', getRandomRestaurant(startLat, startLong))
+	//console.log('Destination name outside: ', getRandomRestaurant(startLat, startLong))
 
 	// console.log('Destination: ', JSON.stringify(destCoords))
 	// if (destination) {
@@ -160,9 +160,7 @@ function getDirections(sender, startLat, startLong) {
 	// else {
 	// 	console.log('Error: ', 'Error receiving random restaurant from Yelp.')
 	// }
-}
 
-function getRandomRestaurant(startLat, startLong) {
 	var yelpToken = ''
 	var bearerText = ''
 	var businessName = ''
@@ -199,10 +197,13 @@ function getRandomRestaurant(startLat, startLong) {
 			let low = 0
 			let high = businessesLength
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
+			var businessName = businessArray[businessNumber].name
 			// console.log(businessArray[businessNumber].name)
 
 			let destLat = businessArray[businessNumber].coordinates.latitude
 			let destLong = businessArray[businessNumber].coordinates.longitude
+
+			sendTextMessage(sender, 'Destination: ' + businessName + ' ' + budestLat + ', ' + destLong)
 
 			//console.log(destLat)
 			//console.log(destLong)
@@ -211,8 +212,8 @@ function getRandomRestaurant(startLat, startLong) {
 			// destObj['lat'] = '1'
 			// destObj['long'] = '2'
 
-			businessName = businessArray[businessNumber].name
-			console.log('Destination name inside: ', businessName)
+			// businessName = businessArray[businessNumber].name
+			// console.log('Destination name inside: ', businessName)
 
 			// return businessName
 
@@ -226,7 +227,7 @@ function getRandomRestaurant(startLat, startLong) {
 		}
 	})
 	})
-	return businessArray[businessNumber].name
+	// return businessArray[businessNumber].name
 }
 
 // Send text message to user
