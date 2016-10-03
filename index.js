@@ -162,8 +162,9 @@ function getDirections(sender, startLat, startLong) {
 }
 
 function getRandomRestaurant(startLat, startLong) {
-	let yelpToken = ''
-	let bearerText = ''
+	var yelpToken = ''
+	var bearerText = ''
+	var businessName = ''
 	request({
 		url: 'https://api.yelp.com/oauth2/token',
 		method: 'POST',
@@ -209,7 +210,7 @@ function getRandomRestaurant(startLat, startLong) {
 			// destObj['lat'] = '1'
 			// destObj['long'] = '2'
 
-			let businessName = businessArray[businessNumber].name
+			businessName = businessArray[businessNumber].name
 			console.log('Destination name inside: ', businessName)
 
 			return businessName
@@ -224,6 +225,7 @@ function getRandomRestaurant(startLat, startLong) {
 		}
 	})
 	})
+	return businessName
 }
 
 // Send text message to user
