@@ -121,9 +121,12 @@ const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 function getDirections(sender, startLat, startLong) {
 	var destCoords = getRandomRestaurant(startLat, startLong)
 	//let debugCoords = JSON.stringify(destCoords)
-	for (i in destCoords) {
-		console.log('Coordinate: ', i)
-	}
+	// for (i in destCoords) {
+	// 	console.log('Coordinate: ', i)
+	// }
+
+	console.log('Destination name: ', destCoords)
+
 	// console.log('Destination: ', JSON.stringify(destCoords))
 	// if (destination) {
 	// 	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
@@ -194,7 +197,7 @@ function getRandomRestaurant(startLat, startLong) {
 			let low = 0
 			let high = businessesLength
 			let businessNumber = Math.floor(Math.random() * (high - low + 1) + low)
-			console.log(businessArray[businessNumber].name)
+			// console.log(businessArray[businessNumber].name)
 
 			let destLat = businessArray[businessNumber].coordinates.latitude
 			let destLong = businessArray[businessNumber].coordinates.longitude
@@ -202,11 +205,11 @@ function getRandomRestaurant(startLat, startLong) {
 			//console.log(destLat)
 			//console.log(destLong)
 
-			var destObj = new Object()
-			destObj['lat'] = '1'
-			destObj['long'] = '2'
+			// var destObj = new Object()
+			// destObj['lat'] = '1'
+			// destObj['long'] = '2'
 
-			return destObj
+			return businessArray[businessNumber].name
 
 			// return {
 			// 	// 'lat': destLat,
