@@ -163,11 +163,11 @@ function getDirections(sender, startLat, startLong) {
 
 			sendTextMessage(sender, 'Destination: ' + businessName + ' ' + destLat + ', ' + destLong)
 
-			console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
-			let endLat = destination.coordinates.latitude
-			let endLong = destination.coordinates.longitude
-			let start = startLat + ', ' + startLong
-			let dest = endLong + ', ' + endLong
+			// console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
+			// let endLat = destination.coordinates.latitude
+			// let endLong = destination.coordinates.longitude
+			// let start = startLat + ', ' + startLong
+			// let dest = endLong + ', ' + endLong
 			
 			request({
 				url: 'https://maps.googleapis.com/maps/api/directions/json',
