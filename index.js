@@ -100,7 +100,7 @@ app.post('/webhook/', function (req, res) {
         let startLongitude = findInJSON(event, 'long')
         if (startLatitude && startLongitude) {
             // let message = event.message
-            console.log('Message: ', JSON.stringify(event.message))            
+            // console.log('Message: ', JSON.stringify(event.message))            
             // sendRandomRestaurant(sender, text)
             sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
             getDirections(sender, startLatitude, startLongitude)
@@ -120,7 +120,8 @@ const googleKey = process.env.GOOGLE_DIRECTIONS_API_KEY
 
 function getDirections(sender, startLat, startLong) {
 	let destCoords = getRandomRestaurant(startLat, startLong)
-	console.log('Destination: ', JSON.stringify(destCoords))
+	let debugCoords = JSON.stringify(destCoords)
+	console.log('Destination: ', debugCoords)
 	// if (destination) {
 	// 	console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
 	// 	let endLat = destination.coordinates.latitude
