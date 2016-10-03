@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 const GoogleMapsAPI = require('googlemaps')
+const htmlToText = require('html-to-text')
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const yelpClientID = process.env.YELP_CLIENT_ID
@@ -189,7 +190,7 @@ function getDirections(sender, startLat, startLong) {
 					// TODO: Send the legs to the user
 					var routeSteps = response.routes[0].legs[0].steps
 					for (var i = 0; i < routeSteps.length; i++) {
-						// console.log(JSON.stringify(response.routes[0].legs[0].steps[i].html_instructions))
+						// console.log(JSON.stringify(routeSteps[i].html_instructions))
 						sendTextMessage(sender, routeSteps[i].html_instructions)
 					}
 				}
@@ -202,6 +203,9 @@ function getDirections(sender, startLat, startLong) {
 // Send text message to user
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
+    var textToSend = htmlToText.fromString(messageData, {
+    	wordwrap: false
+	})
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
