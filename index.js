@@ -184,10 +184,12 @@ function getDirections(sender, startLat, startLong) {
 				} else if (response.body.error) {
 					console.log('Error receiving directions from Google: ', response.body.error)
 				} else {
-					let googleResponse = JSON.parse(body)
-					let legs = googleResponse.routes[0].legs
-					console.log('Legs: ', JSON.stringify(legs))
-					sendTextMessage(sender, 'Got directions. See log for details.')
+					console.log(JSON.stringify(body))
+
+					// let googleResponse = JSON.parse(body)
+					// let legs = googleResponse.routes[0].legs
+					// console.log('Legs: ', JSON.stringify(legs))
+					// sendTextMessage(sender, 'Got directions. See log for details.')
 				}
 			})
 		}
