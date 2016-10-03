@@ -206,6 +206,7 @@ function sendTextMessage(sender, text) {
     var textToSend = htmlToText.fromString(messageData, {
     	wordwrap: false
 	})
+	console.log(textToSend)
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
