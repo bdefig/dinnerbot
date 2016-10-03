@@ -187,9 +187,9 @@ function getDirections(sender, startLat, startLong) {
 					console.log('Successfully received directions from Google')
 					console.log(JSON.stringify(response.routes[0].legs[0].steps))
 					// TODO: Send the legs to the user
-					// for (thisLeg in response.routes[0].legs[0].steps) {
-
-					// }
+					for (thisLeg in response.routes[0].legs[0].steps) {
+						conole.log(thisLeg.html_instructions)
+					}
 				}
 			})
 		}
