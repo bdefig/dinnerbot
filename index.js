@@ -213,7 +213,7 @@ function getRandomRestaurant(startLat, startLong) {
 			businessName = businessArray[businessNumber].name
 			console.log('Destination name inside: ', businessName)
 
-			return businessName
+			// return businessName
 
 			// return {
 			// 	// 'lat': destLat,
