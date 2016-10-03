@@ -107,14 +107,9 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        //console.log(event.recipient.id)
-        //console.log(JSON.stringify(event.message.attachments[0]))
         let startLatitude = findInJSON(event, 'lat')
         let startLongitude = findInJSON(event, 'long')
         if (startLatitude && startLongitude) {
-            // let message = event.message
-            // console.log('Message: ', JSON.stringify(event.message))            
-            // sendRandomRestaurant(sender, text)
             sendTextMessage(sender, 'Latitude: ' + startLatitude + ', Longitude: ' + startLongitude)
             getDirections(sender, startLatitude, startLongitude)
         }
@@ -171,14 +166,11 @@ function getDirections(sender, startLat, startLong) {
 
 			sendTextMessage(sender, 'Destination: ' + businessName + ' ' + destLat + ', ' + destLong)
 
-			// console.log('Destination: ', JSON.stringify(destination).substring(0, 300))
-			// let endLat = destination.coordinates.latitude
-			// let endLong = destination.coordinates.longitude
 			let start = startLat + ',' + startLong
 			let dest = destLat + ',' + destLong
 
-			console.log('Start: ', start)
-			console.log('Dest: ', dest)
+			// console.log('Start: ', start)
+			// console.log('Dest: ', dest)
 
 			var directionsParams = {
 				origin: start,
@@ -194,32 +186,9 @@ function getDirections(sender, startLat, startLong) {
 				} else {
 					console.log('Successfully received directions from Google')
 					console.log(JSON.stringify(response.routes[0].legs))
+					// TODO: Send the legs to the user
 				}
 			})
-
-			// request({
-			// 	url: 'https://maps.googleapis.com/maps/api/directions/json',
-			// 	method: 'GET',
-			// 	headers: {
-			// 		origin: start,
-			// 		'destination': dest,
-			// 		'mode': 'driving',
-			// 		'key': googleKey
-			// 	}
-			// }, function(error, response, body) {
-			// 	if (error) {
-			// 		console.log('Error requesting directions from Google: ', error)
-			// 	} else if (response.body.error) {
-			// 		console.log('Error receiving directions from Google: ', response.body.error)
-			// 	} else {
-			// 		console.log(JSON.stringify(body))
-
-			// 		// let googleResponse = JSON.parse(body)
-			// 		// let legs = googleResponse.routes[0].legs
-			// 		// console.log('Legs: ', JSON.stringify(legs))
-			// 		// sendTextMessage(sender, 'Got directions. See log for details.')
-			// 	}
-			// })
 		}
 	})
 	})
