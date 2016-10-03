@@ -202,9 +202,13 @@ function getRandomRestaurant(startLat, startLong) {
 			//console.log(destLat)
 			//console.log(destLong)
 
+
+
 			return {
-				'lat': destLat,
-				'long': destLong
+				// 'lat': destLat,
+				// 'long': destLong
+				'lat': 1,
+				'long': 2
 			}
 			// sendTextMessage(sender, businessArray[businessNumber].name)
 		}
