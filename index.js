@@ -4,7 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
-const googlemaps = require('googlemaps')
+const GoogleMapsAPI = require('googlemaps')
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const yelpClientID = process.env.YELP_CLIENT_ID
