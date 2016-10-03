@@ -189,11 +189,11 @@ function getDirections(sender, startLat, startLong) {
 			gmAPI.directions(directionsParams, function(err, response) {
 				if (err) {
 					console.log('Error requesting directions from Google: ', err)
-				} else if (response.body.error) {
-					console.log('Error receiving directions from Google: ', response.body.error)
+				} else if (response.error) {
+					console.log('Error receiving directions from Google: ', response.error)
 				} else {
 					console.log('Successfully received directions from Google')
-					console.log(JSON.stringify(response.body))
+					console.log(JSON.stringify(response))
 				}
 			})
 
