@@ -193,7 +193,7 @@ function getDirections(sender, startLat, startLong) {
 					console.log('Error receiving directions from Google: ', response.error)
 				} else {
 					console.log('Successfully received directions from Google')
-					console.log(JSON.stringify(response))
+					console.log(JSON.stringify(response.routes[0].legs))
 				}
 			})
 
