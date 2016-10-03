@@ -169,6 +169,9 @@ function getDirections(sender, startLat, startLong) {
 			let start = startLat + ',' + startLong
 			let dest = destLat + ',' + destLong
 
+			console.log('Start: ', start)
+			console.log('Dest: ', dest)
+
 			request({
 				url: 'https://maps.googleapis.com/maps/api/directions/json',
 				method: 'GET',
