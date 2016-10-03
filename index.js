@@ -125,7 +125,7 @@ function getDirections(sender, startLat, startLong) {
 	// 	console.log('Coordinate: ', i)
 	// }
 
-	console.log('Destination name: ', destCoords)
+	console.log('Destination name outside: ', destCoords)
 
 	// console.log('Destination: ', JSON.stringify(destCoords))
 	// if (destination) {
@@ -209,7 +209,10 @@ function getRandomRestaurant(startLat, startLong) {
 			// destObj['lat'] = '1'
 			// destObj['long'] = '2'
 
-			return businessArray[businessNumber].name
+			let businessName = businessArray[businessNumber].name
+			console.log('Destination name inside: ', businessName)
+
+			return businessName
 
 			// return {
 			// 	// 'lat': destLat,
