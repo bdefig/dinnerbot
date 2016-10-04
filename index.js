@@ -190,11 +190,16 @@ function getDirections(sender, startLat, startLong) {
 					// console.log(JSON.stringify(response.routes[0].legs[0].steps))
 					// TODO: Send the legs to the user
 					var routeSteps = response.routes[0].legs[0].steps
-					for (var i = 0; i < routeSteps.length; i++) {
-						// console.log(JSON.stringify(routeSteps[i].html_instructions))
-						sendTextMessage(sender, routeSteps[i].html_instructions)
-					}
-                    sendTextMessage(sender, 'Bon appetit!')
+					// for (var i = 0; i < routeSteps.length; i++) {
+					// 	// console.log(JSON.stringify(routeSteps[i].html_instructions))
+					// 	sendTextMessage(sender, routeSteps[i].html_instructions)
+					// }
+                    var routeInstructions = []
+                    for (var i = 0; i < routeSteps.length; i++) {
+                        routeInstructions.push(routeSteps[i].html_instructions)
+                    }
+                    sendMessagesInOrder(sender, routeInstructions, 0)
+                    //sendTextMessage(sender, 'Bon appetit!')
 				}
 			})
 		}
@@ -222,6 +227,34 @@ function sendTextMessage(sender, text) {
             console.log('Error sending messages: ', error)
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+function sendMessagesInOrder(sender, messages, i) {
+    var msg = messages[i]
+    var textToSend = htmlToText.fromString(msg, {
+        wordwrap: false
+    })
+    console.log(textToSend)
+    let messageData = { text:textToSend }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+        else if (i < messages.length) {
+            i += 1
+            sendMessagesInOrder(sender, messages, i - 1)
         }
     })
 }
