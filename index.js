@@ -194,6 +194,7 @@ function getDirections(sender, startLat, startLong) {
 						// console.log(JSON.stringify(routeSteps[i].html_instructions))
 						sendTextMessage(sender, routeSteps[i].html_instructions)
 					}
+                    sendTextMessage(sender, 'Bon appetit!')
 				}
 			})
 		}
