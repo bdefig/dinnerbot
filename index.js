@@ -198,7 +198,7 @@ function getDirections(sender, startLat, startLong) {
                     for (var i = 0; i < routeSteps.length; i++) {
                         routeInstructions.push(routeSteps[i].html_instructions)
                     }
-                    sendMessagesInOrder(sender, routeInstructions, 0)
+                    //sendMessagesInOrder(sender, routeInstructions, 0)
                     //sendTextMessage(sender, 'Bon appetit!')
 				}
 			})
