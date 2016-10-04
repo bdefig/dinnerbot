@@ -252,11 +252,11 @@ function sendMessagesInOrder(sender, messages, i) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
-        else if (i <= messages.length) {
+        else if (i < messages.length) {
             i += 1
             sendMessagesInOrder(sender, messages, i)
         }
-        else if (i == messages.length + 1) {
+        else if (i == messages.length) {
             sendTextMessage(sender, 'Bon appetit!')
         }
     })
