@@ -198,7 +198,7 @@ function getDirections(sender, startLat, startLong) {
                     for (var i = 0; i < routeSteps.length; i++) {
                         routeInstructions.push(routeSteps[i].html_instructions)
                     }
-                    //sendMessagesInOrder(sender, routeInstructions, 0)
+                    sendMessagesInOrder(sender, routeInstructions, 1)
                     //sendTextMessage(sender, 'Bon appetit!')
 				}
 			})
@@ -232,7 +232,7 @@ function sendTextMessage(sender, text) {
 }
 
 function sendMessagesInOrder(sender, messages, i) {
-    var msg = messages[i]
+    var msg = messages[i-1]
     var textToSend = htmlToText.fromString(msg, {
         wordwrap: false
     })
@@ -252,9 +252,12 @@ function sendMessagesInOrder(sender, messages, i) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
-        else if (i < messages.length) {
+        else if (i <= messages.length) {
             i += 1
-            sendMessagesInOrder(sender, messages, i - 1)
+            sendMessagesInOrder(sender, messages, i)
+        }
+        else if (i == messages.length + 1) {
+            sendTextMessage(sender, 'Bon appetit!')
         }
     })
 }
