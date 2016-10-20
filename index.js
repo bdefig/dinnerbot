@@ -220,7 +220,7 @@ function getDirections(sender, startLat, startLong) {
 
 function splitLastMessage(message) {
     // indexToSplit = message.indexOf('Destination')
-    var stringArray = message.split(Destination)
+    var stringArray = message.split('Destination')
     if (stringArray.length > 1) {
         var firstMessage = stringArray[0]
         var secondMessage = 'Destination' + stringArray[1]
