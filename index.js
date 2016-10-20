@@ -194,17 +194,38 @@ function getDirections(sender, startLat, startLong) {
 					// 	// console.log(JSON.stringify(routeSteps[i].html_instructions))
 					// 	sendTextMessage(sender, routeSteps[i].html_instructions)
 					// }
+
+                    // TODO: Store the trip in a Postgres table
+                    // Store steps of the trip trip as an array of strings (directions)
+                    // Store the step the user is on
+                    // The step can come in a rich message, with a postback button for 'Next step'
+                    // When the user taps 'Next step,' dinnerbot can send them the next step and update Postgres
+                    // We can store a timestamp when the trip was created and create a new trip if it's been a while (an hour?)
+                    // Or we can add a button for 'New trip'
+                    // Or we can just start a new trip when the user sends their location
                     var routeInstructions = []
-                    for (var i = 0; i < routeSteps.length; i++) {
+                    for (var i = 0; i < routeSteps.length - 1; i++) {
                         routeInstructions.push(routeSteps[i].html_instructions)
                     }
+                    var lastTwoMessages = routeSteps[routeSteps.length - 1].splitLastMessage
+                    routeInstructions.push(lastTwoMessages[0])
+                    routeInstructions.push(lastTwoMessages[1])
                     sendMessagesInOrder(sender, routeInstructions, 1)
-                    //sendTextMessage(sender, 'Bon appetit!')
 				}
 			})
 		}
 	})
 	})
+}
+
+function splitLastMessage(message) {
+    // indexToSplit = message.indexOf('Destination')
+    var stringArray = message.split(Destination)
+    if (stringArray.length > 1) {
+        var firstMessage = stringArray[0]
+        var secondMessage = 'Destination' + stringArray[1]
+    }
+    return [firstMessage, secondMessage]
 }
 
 // Send text message to user
@@ -232,6 +253,7 @@ function sendTextMessage(sender, text) {
 }
 
 function sendMessagesInOrder(sender, messages, i) {
+    // TODO: Clean this up. This creates a copy of the messages array each time, unnecessarily using space
     var msg = messages[i-1]
     var textToSend = htmlToText.fromString(msg, {
         wordwrap: false
