@@ -207,7 +207,7 @@ function getDirections(sender, startLat, startLong) {
                     for (var i = 0; i < routeSteps.length - 1; i++) {
                         routeInstructions.push(routeSteps[i].html_instructions)
                     }
-                    var lastTwoMessages = routeSteps[routeSteps.length - 1].splitLastMessage
+                    var lastTwoMessages = splitLastMessage(routeSteps[routeSteps.length - 1])
                     routeInstructions.push(lastTwoMessages[0])
                     routeInstructions.push(lastTwoMessages[1])
                     sendMessagesInOrder(sender, routeInstructions, 1)
